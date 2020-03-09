@@ -20,6 +20,7 @@ import Typography from '@material-ui/core/Typography';
 import { withRouter } from "react-router";
 import PubSub from 'pubsub-js'
 import ErrorIcon from "@material-ui/icons/ErrorOutline";
+import { CircularProgress } from '@material-ui/core';
 
 var dispatch
 
@@ -30,6 +31,7 @@ class Login extends React.Component {
       email: "",
       password: "",
       remember: true,
+      login: false
     }
     dispatch = this.props.dispatch
   }
@@ -39,7 +41,9 @@ class Login extends React.Component {
   }
 
   login = () => {
+    this.setState({ login: true })
     dispatch(Actions.login(this.state.email, this.state.password, this.state.remember)).then(logged => {
+      this.setState({ login: false })
       if (logged) {
         this.props.history.push("/home")
       } else {
@@ -51,7 +55,7 @@ class Login extends React.Component {
 
   render() {
     const c = this.props.classes
-    const { email, password, remember } = this.state
+    const { email, password, remember, login } = this.state
     return (<Grid container component="main" className={c.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={c.image} />
@@ -94,15 +98,18 @@ class Login extends React.Component {
               control={<Checkbox value="remember" checked={remember} onChange={_ => this.setState({ remember: !remember })} color="primary" />}
               label="Se souvenir de moi"
             />
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={this.login}
-              className={c.submit}
-            >
-              SE CONNECTER
-            </Button>
+            <div style={{ margin: 5, display: "flex", justifyContent: "center" }}>
+
+              {login ? <CircularProgress /> : <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={this.login}
+                className={c.submit}
+              >
+                SE CONNECTER
+            </Button>}
+            </div>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
