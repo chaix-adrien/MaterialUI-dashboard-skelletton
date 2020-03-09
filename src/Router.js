@@ -23,7 +23,7 @@ class Router extends React.Component {
     if (this.props.user) return
     this.props.dispatch(Actions.autoLogin()).then(logged => {
       if (logged) {
-        this.props.history.push("/home/dashboard")
+        //this.props.history.push("/home/dashboard")
       } else {
         this.props.history.push("/home/login")
       }
