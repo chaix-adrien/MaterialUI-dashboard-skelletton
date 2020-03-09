@@ -45,7 +45,7 @@ class Login extends React.Component {
     dispatch(Actions.login(this.state.email, this.state.password, this.state.remember)).then(logged => {
       this.setState({ login: false })
       if (logged) {
-        this.props.history.push("/home")
+        this.props.history.push("/")
       } else {
         PubSub.notif({ txt: "Impossible de vous connecter. Verrifiez vos identidiants", icon: ErrorIcon, color: "danger" })
       }

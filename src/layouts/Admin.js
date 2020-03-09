@@ -10,6 +10,7 @@ import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
+import View404 from "views/View404.js";
 
 import routes from "routes.js";
 
@@ -23,18 +24,18 @@ let ps;
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (prop.layout === "/home") {
+      if (prop.path)
         return (
           <Route
-            path={prop.layout + prop.path}
+            exact
+            path={(prop.layout || "") + prop.path}
             component={prop.component}
             key={key}
           />
-        );
-      }
-      return null;
+        )
+      else return null
     })}
-    <Redirect from="/home" to="/home/dashboard" />
+    <Route component={View404} />
   </Switch>
 );
 
@@ -65,9 +66,6 @@ export default function Admin({ ...rest }) {
   };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-  const getRoute = () => {
-    return window.location.pathname !== "/admin/maps";
   };
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -111,14 +109,11 @@ export default function Admin({ ...rest }) {
           {...rest}
         />
         {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-        {getRoute() ? (
-          <div className={classes.content}>
-            <div className={classes.headerFill} />
-            <div className={classes.container}>{switchRoutes}</div>
-          </div>
-        ) : (
-            <div className={classes.map}>{switchRoutes}</div>
-          )}
+        <div className={classes.content}>
+          <div className={classes.headerFill} />
+          <div className={classes.container}>{switchRoutes}</div>
+        </div>
+
 
       </div>
     </div>

@@ -19,27 +19,23 @@ const useStyles = makeStyles(styles);
 
 export default function Header(props) {
   const classes = useStyles();
-  function makeBrand() {
-    var name;
-    props.routes.map(prop => {
-      if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
-        name = props.rtlActive ? prop.rtlName : prop.name;
-      }
-      return null;
+  function getRoute() {
+    return props.routes.find(prop => {
+      return (window.location.pathname === prop.layout + prop.path || window.location.pathname === prop.layout + prop.path + "/")
     });
-    return name;
   }
   const { color } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color
   });
+  if (!getRoute() || getRoute().hideHeader) return null
   return (
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
           <Button color="transparent" href="#" className={classes.title}>
-            {makeBrand()}
+            {getRoute().name}
           </Button>
         </div>
         <Hidden smDown implementation="css">

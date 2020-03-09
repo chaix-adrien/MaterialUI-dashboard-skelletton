@@ -22,17 +22,24 @@ import DashboardPage from "views/Dashboard/Dashboard.js";
 // core components/views for Admin layout
 import LogOutPage from "views/Logout.js";
 import Login from "views/Login.js";
+import Welcome from "views/Welcome.js";
 // core components/views for RTL layout
 
 //ROLE: null = not loged, [1, 2, 3...] = only for 1 OR 2 OR 3, [] = logged
 
 const dashboardRoutes = [
   {
+    path: "/",
+    name: "home",
+    hidden: true,
+    hideHeader: true,
+    component: Welcome,
+  },
+  {
     path: "/login",
     name: "Se connecter",
     icon: DashboardIcon,
     component: Login,
-    layout: "/home",
     role: null,
   },
   {
@@ -45,7 +52,7 @@ const dashboardRoutes = [
     name: "Dashboard",
     icon: DashboardIcon,
     component: DashboardPage,
-    layout: "/home",
+    layout: "/admin",
     role: [1, 2]
   },
   {
@@ -57,7 +64,6 @@ const dashboardRoutes = [
     name: "Déconnexion",
     icon: LogOutIcon,
     component: LogOutPage,
-    layout: "/home",
     role: []
   },
 ];

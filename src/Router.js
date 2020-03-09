@@ -32,8 +32,7 @@ class Router extends React.Component {
 
   render() {
     return <Switch>
-      <Route path="/home" component={Admin} />
-      <Redirect from="/" to="/home/dashboard" />
+      <Route component={Admin} />
     </Switch>
   }
 }

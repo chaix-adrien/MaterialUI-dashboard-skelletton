@@ -27,12 +27,13 @@ export default function Sidebar(props) {
   const classes = useStyles();
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
-    return window.location.href.indexOf(routeName) > -1 ? true : false;
+    return window.location.pathname === routeName || window.location.pathname === routeName + "/";
   }
   const { color, logo, image, logoText, routes } = props;
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
+        if (prop.hidden) return null
         if (prop.role === null && user) return null
         if (prop.role && !user) return null
         if (prop.role && prop.role.length && !prop.role.includes(user.role)) return null
