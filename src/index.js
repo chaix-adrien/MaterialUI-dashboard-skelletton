@@ -17,26 +17,24 @@
 */
 import React from "react";
 import ReactDOM from "react-dom";
-import { createBrowserHistory } from "history";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import Router from "./Router.js";
 import Provider from 'react-redux/es/components/Provider';
 import store from './redux';
-
+import { Router as DomRouter } from "react-router-dom";
+import { createBrowserHistory } from "history";
 // core components
-import Admin from "layouts/Admin.js";
 
 import "assets/css/material-dashboard-react.css?v=1.8.0";
+
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={hist}>
-      <Switch>
-        <Route path="/home" component={Admin} />
-        <Redirect from="/" to="/home/dashboard" />
-      </Switch>
-    </Router>
-  </Provider>,
+    <DomRouter history={hist} >
+      <Router />
+    </DomRouter>
+  </Provider>
+  ,
   document.getElementById("root")
 );

@@ -8,14 +8,15 @@ import * as Actions from 'redux/actions';
 import { withRouter } from "react-router";
 var dispatch
 
-class TEMPLATE extends React.Component {
+class Logout extends React.Component {
   constructor(props) {
     super(props)
     dispatch = this.props.dispatch
   }
 
   componentDidMount() {
-    //dispatch(Actions.getFiches())
+    dispatch(Actions.logout())
+    this.props.history.push("/home/login")
   }
 
   componentWillUnmount() { }
@@ -35,4 +36,4 @@ const styles = theme => ({
 
 
 const mapStateToProps = (state) => ({ fiches: state.reducer.fiches })
-export default withRouter(withStyles(styles)(withReducer("reducer", reducer)(connect(mapStateToProps)(TEMPLATE))))
+export default withRouter(withStyles(styles)(withReducer("reducer", reducer)(connect(mapStateToProps)(Logout))))

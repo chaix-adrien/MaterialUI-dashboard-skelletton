@@ -11,6 +11,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
+import { useDispatch, useSelector } from 'react-redux';
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 
@@ -20,6 +21,8 @@ import Footer from "components/Footer/Footer"
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
+  const user = useSelector(({ reducer: { user } }) => user);
+  console.log("USER", user)
   const classes = useStyles();
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
@@ -29,6 +32,9 @@ export default function Sidebar(props) {
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
+        if (prop.role === null && user) return null
+        if (prop.role && !user) return null
+        if (prop.role && prop.role.length && !prop.role.includes(user.role)) return null
         var listItemClasses;
         listItemClasses = classNames({
           [" " + classes[color]]: activeRoute(prop.layout + prop.path)

@@ -17,23 +17,42 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
+import { withRouter } from "react-router";
+import Snackbar from "components/Snackbar/Snackbar.js";
+import ErrorIcon from "@material-ui/icons/ErrorOutline";
 var dispatch
 
 class Login extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      email: "",
+      password: "",
+      remember: true,
+      notif: false
+    }
     dispatch = this.props.dispatch
   }
 
   componentDidMount() {
-    dispatch(Actions.getFiches())
+    console.log(this.props)
   }
 
-  componentWillUnmount() { }
+  login = () => {
+    dispatch(Actions.login(this.state.email, this.state.password, this.state.remember)).then(logged => {
+      if (logged) {
+        this.props.history.push("/home")
+      } else {
+        this.setState({ notif: true })
+      }
+    })
+
+  }
 
   render() {
     const c = this.props.classes
     const { fiches } = this.props
+    const { email, password, remember } = this.state
     return (<Grid container component="main" className={c.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={c.image} />
@@ -52,6 +71,8 @@ class Login extends React.Component {
               required
               fullWidth
               id="email"
+              value={email}
+              onChange={e => this.setState({ email: e.target.value })}
               label="Adresse mail"
               name="email"
               autoComplete="email"
@@ -64,19 +85,21 @@ class Login extends React.Component {
               fullWidth
               name="password"
               label="Mot de passe"
+              value={password}
+              onChange={e => this.setState({ password: e.target.value })}
               type="password"
               id="password"
               autoComplete="current-password"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" checked={remember} onChange={_ => this.setState({ remember: !remember })} color="primary" />}
               label="Se souvenir de moi"
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
+              onClick={this.login}
               className={c.submit}
             >
               SE CONNECTER
@@ -98,6 +121,15 @@ class Login extends React.Component {
           </form>
         </div>
       </Grid>
+      <Snackbar
+        place="bc"
+        color="danger"
+        icon={ErrorIcon}
+        message="Impossible de vous connecter. Verrifiez vos identidiants"
+        open={this.state.notif}
+        closeNotification={() => this.setState({ notif: false })}
+        close
+      />
     </Grid>)
   }
 }
@@ -135,4 +167,4 @@ const styles = theme => ({
 
 
 const mapStateToProps = (state) => ({ fiches: state.reducer.fiches })
-export default withStyles(styles)(withReducer("reducer", reducer)(connect(mapStateToProps)(Login)))
+export default withRouter(withStyles(styles)(withReducer("reducer", reducer)(connect(mapStateToProps)(Login))))

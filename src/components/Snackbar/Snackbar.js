@@ -34,16 +34,18 @@ export default function Snackbar(props) {
   }
   return (
     <Snack
+      autoHideDuration={2000}
       anchorOrigin={{
         vertical: place.indexOf("t") === -1 ? "bottom" : "top",
         horizontal:
           place.indexOf("l") !== -1
             ? "left"
             : place.indexOf("c") !== -1
-            ? "center"
-            : "right"
+              ? "center"
+              : "right"
       }}
       open={open}
+      onClose={props.closeNotification}
       message={
         <div>
           {icon !== undefined ? <props.icon className={classes.icon} /> : null}
