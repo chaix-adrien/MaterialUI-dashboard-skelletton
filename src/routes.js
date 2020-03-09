@@ -36,12 +36,21 @@ const dashboardRoutes = [
     role: null,
   },
   {
+    type: "title",
+    text: "Administrateur",
+    role: [1]
+  },
+  {
     path: "/dashboard",
     name: "Dashboard",
     icon: DashboardIcon,
     component: DashboardPage,
     layout: "/home",
     role: [1, 2]
+  },
+  {
+    type: "separator",
+    role: []
   },
   {
     path: "/logout",

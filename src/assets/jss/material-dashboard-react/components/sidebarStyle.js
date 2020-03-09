@@ -179,8 +179,18 @@ const sidebarStyle = theme => ({
     fontSize: "14px",
     color: whiteColor
   },
-  itemTextRTL: {
-    textAlign: "right"
+  separator: {
+    width: "100%",
+    marginTop: 20,
+    marginBottom: 20,
+    borderTopColor: "grey",
+    borderTopStyle: "solid",
+    borderTopWidth: 1
+  },
+  title: {
+    ...defaultFont,
+    color: "white",
+    marginLeft: 10
   },
   whiteFont: {
     color: whiteColor
