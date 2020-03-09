@@ -18,8 +18,9 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withRouter } from "react-router";
-import Snackbar from "components/Snackbar/Snackbar.js";
+import PubSub from 'pubsub-js'
 import ErrorIcon from "@material-ui/icons/ErrorOutline";
+
 var dispatch
 
 class Login extends React.Component {
@@ -29,7 +30,6 @@ class Login extends React.Component {
       email: "",
       password: "",
       remember: true,
-      notif: false
     }
     dispatch = this.props.dispatch
   }
@@ -43,7 +43,7 @@ class Login extends React.Component {
       if (logged) {
         this.props.history.push("/home")
       } else {
-        this.setState({ notif: true })
+        PubSub.notif({ txt: "Impossible de vous connecter. Verrifiez vos identidiants", icon: ErrorIcon, color: "danger" })
       }
     })
 
@@ -51,7 +51,6 @@ class Login extends React.Component {
 
   render() {
     const c = this.props.classes
-    const { fiches } = this.props
     const { email, password, remember } = this.state
     return (<Grid container component="main" className={c.root}>
       <CssBaseline />
@@ -121,15 +120,6 @@ class Login extends React.Component {
           </form>
         </div>
       </Grid>
-      <Snackbar
-        place="bc"
-        color="danger"
-        icon={ErrorIcon}
-        message="Impossible de vous connecter. Verrifiez vos identidiants"
-        open={this.state.notif}
-        closeNotification={() => this.setState({ notif: false })}
-        close
-      />
     </Grid>)
   }
 }

@@ -22,6 +22,7 @@ import Provider from 'react-redux/es/components/Provider';
 import store from './redux';
 import { Router as DomRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import Notifier from "components/Snackbar/Notifier"
 // core components
 
 import "assets/css/material-dashboard-react.css?v=1.8.0";
@@ -31,6 +32,7 @@ const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
+    <Notifier />
     <DomRouter history={hist} >
       <Router />
     </DomRouter>
