@@ -180,10 +180,12 @@ const sidebarStyle = theme => ({
     color: whiteColor
   },
   separator: {
-    width: "100%",
+    width: "90%",
     marginTop: 20,
+    marginLeft: "5%",
+    marginRight: "5%",
     marginBottom: 20,
-    borderTopColor: "grey",
+    borderTopColor: "#444444",
     borderTopStyle: "solid",
     borderTopWidth: 1
   },

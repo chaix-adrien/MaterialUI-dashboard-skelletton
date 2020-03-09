@@ -39,8 +39,8 @@ export default function Sidebar(props) {
         if (prop.role === null && user) return null
         if (prop.role && !user) return null
         if (prop.role && prop.role.length && !prop.role.includes(user.role)) return null
-        if (prop.type === "separator") return <div className={classes.separator} />
-        if (prop.type === "title") return <Typography className={classes.title}>{prop.text}</Typography>
+        if (prop.type === "separator") return <div key={key} className={classes.separator} />
+        if (prop.type === "title") return <Typography key={key} className={classes.title}>{prop.text}</Typography>
         var listItemClasses;
         listItemClasses = classNames({
           [" " + classes[color]]: activeRoute((prop.layout || "") + prop.path)
