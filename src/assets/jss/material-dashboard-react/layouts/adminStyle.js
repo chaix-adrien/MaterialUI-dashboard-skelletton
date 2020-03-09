@@ -19,17 +19,27 @@ const appStyle = theme => ({
     float: "right",
     ...transition,
     maxHeight: "100%",
+    display: "flex",
+    height: "100%",
+    flexDirection: "column",
+    justifyContent: "flex-start",
     width: "100%",
     overflowScrolling: "touch"
   },
   content: {
-    marginTop: "70px",
-    padding: "30px 15px",
-    minHeight: "calc(100vh - 123px)"
+    padding: "0px 10px",
+    minHeight: "calc(100vh - 123px)",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%"
   },
-  container,
+  container: { ...container, height: "100%", marginRight: 0, marginLeft: 0 },
   map: {
     marginTop: "70px"
+  },
+  headerFill: {
+    minHeight: 85,
+    height: 85,
   }
 });
 

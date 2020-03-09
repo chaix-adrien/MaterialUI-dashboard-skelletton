@@ -26,17 +26,19 @@ const footerStyle = {
     padding: "15px 0",
     margin: "0",
     fontSize: "14px",
+    color: "white",
     float: "right!important"
   },
   footer: {
     bottom: "0",
-    borderTop: "1px solid " + grayColor[11],
     padding: "15px 0",
+    position: "absolute",
+    right: 0,
     ...defaultFont
   },
   container,
   a: {
-    color: primaryColor,
+    color: "#ff9f00",
     textDecoration: "none",
     backgroundColor: "transparent"
   },
