@@ -23,12 +23,12 @@ import store from './redux';
 import { Router as DomRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import Notifier from "components/Snackbar/Notifier"
-// core components
-
+import logo from "assets/img/reactlogo.png";
 import "assets/css/material-dashboard-react.css?v=1.8.0";
-
-
 const hist = createBrowserHistory();
+
+window.siteName = "TEMPLATE"
+window.siteLogo = logo
 
 ReactDOM.render(
   <Provider store={store}>

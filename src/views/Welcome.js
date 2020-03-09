@@ -14,8 +14,8 @@ class Welcome extends React.PureComponent {
   render() {
     const c = this.props.classes
     return (<div className={c.container}>
-      <img src="https://source.unsplash.com/random" alt="logo" className={c.logo} />
-      <h1>TEMPLATE SITE</h1>
+      <img src={window.siteLogo} alt="logo" className={c.logo} />
+      <h1>{window.siteName}</h1>
     </div>)
   }
 }

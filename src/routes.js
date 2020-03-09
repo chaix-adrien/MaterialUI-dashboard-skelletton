@@ -30,7 +30,8 @@ import Welcome from "views/Welcome.js";
 const dashboardRoutes = [
   {
     path: "/",
-    name: "home",
+    name: "Home",
+    tabTitle: "Acceuil",
     hidden: true,
     hideHeader: true,
     component: Welcome,

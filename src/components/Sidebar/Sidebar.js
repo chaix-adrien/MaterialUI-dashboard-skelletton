@@ -33,6 +33,8 @@ export default function Sidebar(props) {
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
+        if (prop.path && activeRoute((prop.layout || "") + prop.path))
+          window.document.title = window.siteName + " " + (prop.tabTitle || prop.name)
         if (prop.hidden) return null
         if (prop.role === null && user) return null
         if (prop.role && !user) return null
@@ -41,14 +43,14 @@ export default function Sidebar(props) {
         if (prop.type === "title") return <Typography className={classes.title}>{prop.text}</Typography>
         var listItemClasses;
         listItemClasses = classNames({
-          [" " + classes[color]]: activeRoute(prop.layout + prop.path)
+          [" " + classes[color]]: activeRoute((prop.layout || "") + prop.path)
         });
         const whiteFontClasses = classNames({
-          [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
+          [" " + classes.whiteFont]: activeRoute((prop.layout || "") + prop.path)
         });
         return (
           <NavLink
-            to={prop.layout + prop.path}
+            to={(prop.layout || "") + prop.path}
             className={classes.item}
             activeClassName="active"
             key={key}
@@ -85,18 +87,16 @@ export default function Sidebar(props) {
   );
   var brand = (
     <div className={classes.logo}>
-      <a
-        href="https://www.creative-tim.com?ref=mdr-sidebar"
+      <div
         className={classNames(classes.logoLink, {
           [classes.logoLinkRTL]: props.rtlActive
         })}
-        target="_blank"
       >
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
         </div>
         {logoText}
-      </a>
+      </div>
     </div>
   );
   return (
