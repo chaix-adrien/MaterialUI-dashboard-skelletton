@@ -32,7 +32,7 @@ const header = function Header(props) {
         if (himself) return prop
         if (prop.children) {
           const child = getRoute(prop.children)
-          if (child) return { ...child, isChild: true }
+          if (child) return { ...child, isChild: prop }
         }
       }
     }
@@ -47,7 +47,7 @@ const header = function Header(props) {
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
-          {currentRoute.isChild && <IconButton onClick={_ => props.history.goBack()}><Icon style={{ color: "white" }}>arrow_back</Icon></IconButton>}
+          {currentRoute.isChild && <IconButton onClick={_ => props.history.push((currentRoute.isChild.layout || "") + currentRoute.isChild.path)}><Icon style={{ color: "white" }}>arrow_back</Icon></IconButton>}
           <Button color="transparent" href="#" className={classes.title}>
             {currentRoute.name}
           </Button>
