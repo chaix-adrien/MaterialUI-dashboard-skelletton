@@ -29,6 +29,7 @@ const hist = createBrowserHistory();
 
 window.siteName = "TEMPLATE"
 window.siteLogo = logo
+window.document.title = window.siteName
 
 ReactDOM.render(
   <Provider store={store}>
