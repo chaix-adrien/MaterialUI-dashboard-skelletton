@@ -28,21 +28,27 @@ export function login(email, password, remember = true) {
 export function autoLogin() {
   if (localStorage.getItem('jwt_access_token')) {
     return dispatch => {
+      const out = {
+        wasLogged: false,
+        logged: false
+      }
+      if (localStorage.getItem('jwt_access_token')) out.wasLogged = true
       dispatch({
         type: SET_TOKEN,
         payload: localStorage.getItem('jwt_access_token')
       })
       return axios.get("/user/me").then(rep => {
+        if (rep.data) out.logged = true
         dispatch({
           type: SET_USER,
           payload: rep.data
         })
-        return true
+        return out
       })
     }
   }
   else
-    return _ => Promise.resolve(false)
+    return _ => Promise.resolve({ wasLogged: false, logged: false })
 }
 
 export function logout() {

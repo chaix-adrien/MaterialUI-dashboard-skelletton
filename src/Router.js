@@ -21,11 +21,11 @@ class Router extends React.Component {
 
   tryAutoLogin = () => {
     if (this.props.user) return
-    this.props.dispatch(Actions.autoLogin()).then(logged => {
-      if (logged) {
-        //this.props.history.push("/home/dashboard")
-      } else {
-        this.props.history.push("/home/login")
+    this.props.dispatch(Actions.autoLogin()).then(state => {
+      if (state.logged) {
+      } else if (state.wasLogged) {
+        this.props.dispatch(Actions.logout())
+        this.props.history.push("/login")
       }
     })
   }
