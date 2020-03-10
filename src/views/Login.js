@@ -1,25 +1,25 @@
-import React from 'react'
-import withReducer from "redux/withReducer"
-import { withStyles } from "@material-ui/core/styles"
-import { } from "assets/jss/material-dashboard-react.js";
-import { connect } from 'react-redux';
-import reducer from 'redux/reducers';
-import * as Actions from 'redux/actions';
+import { CircularProgress } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { withStyles } from "@material-ui/core/styles";
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { } from "assets/jss/material-dashboard-react.js";
+import PubSub from 'pubsub-js';
+import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from "react-router";
-import PubSub from 'pubsub-js'
-import { CircularProgress } from '@material-ui/core';
+import * as Actions from 'redux/actions';
+import reducer from 'redux/reducers';
+import withReducer from "redux/withReducer";
 
 var dispatch
 
@@ -33,10 +33,6 @@ class Login extends React.Component {
       login: false
     }
     dispatch = this.props.dispatch
-  }
-
-  componentDidMount() {
-    console.log(this.props)
   }
 
   login = () => {

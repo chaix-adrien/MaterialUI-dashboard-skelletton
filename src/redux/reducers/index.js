@@ -6,7 +6,6 @@ const defaultState = {
 
 const reducer = function (state = defaultState, action) {
   if (!action) return state
-  console.log("set state", action.type)
   switch (action.type) {
     case Actions.SET_USER:
       return {

@@ -23,7 +23,6 @@ const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
   const user = useSelector(({ reducer: { user } }) => user);
-  console.log("USER", user)
   const classes = useStyles();
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {

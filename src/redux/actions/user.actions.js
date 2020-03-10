@@ -12,7 +12,6 @@ export function login(email, password, remember = true) {
           payload: response.data.user.token,
           remember,
         })
-        console.log("GET ME", axios.defaults.headers)
         return axios.get("/user/me").then(rep => {
           dispatch({
             type: SET_USER,
@@ -21,7 +20,6 @@ export function login(email, password, remember = true) {
           return true
         })
       })
-      .catch(e => console.log(e));
 }
 
 

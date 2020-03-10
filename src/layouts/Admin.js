@@ -1,22 +1,20 @@
-import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+// @material-ui/core components
+import { makeStyles } from "@material-ui/core/styles";
+import bgImage from "assets/img/sidebar-2.jpg";
+import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
+// core components
+import Navbar from "components/Navbars/Navbar.js";
+import Sidebar from "components/Sidebar/Sidebar.js";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-// core components
-import Navbar from "components/Navbars/Navbar.js";
-import Footer from "components/Footer/Footer.js";
-import Sidebar from "components/Sidebar/Sidebar.js";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import routes from "routes.js";
 import View404 from "views/View404.js";
 
-import routes from "routes.js";
 
-import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
-import bgImage from "assets/img/sidebar-2.jpg";
 
 let ps;
 

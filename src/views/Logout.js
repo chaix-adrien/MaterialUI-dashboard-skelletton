@@ -6,26 +6,14 @@ import { connect } from 'react-redux';
 import reducer from 'redux/reducers';
 import * as Actions from 'redux/actions';
 import { withRouter } from "react-router";
-var dispatch
 
 class Logout extends React.Component {
-  constructor(props) {
-    super(props)
-    dispatch = this.props.dispatch
-  }
-
   componentDidMount() {
-    dispatch(Actions.logout())
+    this.props.dispatch(Actions.logout())
     this.props.history.push("/login")
   }
-
-  componentWillUnmount() { }
-
   render() {
-    const c = this.props.classes
-    const { fiches } = this.props
-    return (<div className={c.container}>
-    </div>)
+    return null
   }
 }
 

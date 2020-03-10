@@ -1,4 +1,3 @@
-import { } from "assets/jss/material-dashboard-react.js";
 import React from 'react';
 import PubSub from 'pubsub-js'
 import Snackbar from "components/Snackbar/Snackbar.js";

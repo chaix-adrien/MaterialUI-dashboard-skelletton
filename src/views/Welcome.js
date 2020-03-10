@@ -1,14 +1,6 @@
-import React from 'react'
-import withReducer from "redux/withReducer"
-import { withStyles } from "@material-ui/core/styles"
+import { withStyles } from "@material-ui/core/styles";
 import { } from "assets/jss/material-dashboard-react.js";
-import { connect } from 'react-redux';
-import reducer from 'redux/reducers';
-import * as Actions from 'redux/actions';
-import { withRouter } from "react-router";
-import { Typography } from '@material-ui/core';
-import Primary from 'components/Typography/Primary';
-var dispatch
+import React from 'react';
 
 class Welcome extends React.PureComponent {
   render() {

@@ -19,9 +19,9 @@
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import LogOutIcon from "@material-ui/icons/ExitToApp";
 import DashboardPage from "views/Dashboard/Dashboard.js";
+import Login from "views/Login.js";
 // core components/views for Admin layout
 import LogOutPage from "views/Logout.js";
-import Login from "views/Login.js";
 import Welcome from "views/Welcome.js";
 // core components/views for RTL layout
 

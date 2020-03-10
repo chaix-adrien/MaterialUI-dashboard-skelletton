@@ -15,16 +15,16 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import "assets/css/material-dashboard-react.css?v=1.8.0";
+import logo from "assets/img/reactlogo.png";
+import Notifier from "components/Snackbar/Notifier";
+import { createBrowserHistory } from "history";
 import React from "react";
 import ReactDOM from "react-dom";
-import Router from "./Router.js";
 import Provider from 'react-redux/es/components/Provider';
-import store from './redux';
 import { Router as DomRouter } from "react-router-dom";
-import { createBrowserHistory } from "history";
-import Notifier from "components/Snackbar/Notifier"
-import logo from "assets/img/reactlogo.png";
-import "assets/css/material-dashboard-react.css?v=1.8.0";
+import store from './redux';
+import Router from "./Router.js";
 const hist = createBrowserHistory();
 
 window.siteName = "TEMPLATE"

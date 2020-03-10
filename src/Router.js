@@ -1,13 +1,11 @@
-import React from "react";
-import Provider from 'react-redux/es/components/Provider';
-import store from './redux';
-import { connect } from 'react-redux';
-import { Router as DomRouter, Route, Switch, Redirect } from "react-router-dom";
-import reducer from 'redux/reducers';
 import Admin from "layouts/Admin.js";
+import React from "react";
+import { connect } from 'react-redux';
 import { withRouter } from "react-router";
-import withReducer from "redux/withReducer"
+import { Route, Switch } from "react-router-dom";
 import * as Actions from 'redux/actions';
+import reducer from 'redux/reducers';
+import withReducer from "redux/withReducer";
 
 class Router extends React.Component {
   constructor(props) {
@@ -15,7 +13,6 @@ class Router extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
     this.tryAutoLogin()
   }
 
