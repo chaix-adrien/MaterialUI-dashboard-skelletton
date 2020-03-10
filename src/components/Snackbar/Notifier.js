@@ -2,6 +2,8 @@ import { } from "assets/jss/material-dashboard-react.js";
 import React from 'react';
 import PubSub from 'pubsub-js'
 import Snackbar from "components/Snackbar/Snackbar.js";
+import ErrorIcon from "@material-ui/icons/ErrorOutline";
+
 PubSub.notif = (notif) => PubSub.publish('NOTIF', notif)
 class Notifier extends React.Component {
   constructor(props) {
@@ -25,7 +27,7 @@ class Notifier extends React.Component {
     return (<Snackbar
       place="bc"
       color={notif.color || "info"}
-      icon={notif.icon}
+      icon={notif.icon || (notif.color === "danger" ? ErrorIcon : undefined)}
       message={notif.txt}
       open={this.state.notif ? true : false}
       closeNotification={() => this.setState({ notif: null })}

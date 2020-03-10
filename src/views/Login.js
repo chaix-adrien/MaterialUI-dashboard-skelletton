@@ -19,7 +19,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withRouter } from "react-router";
 import PubSub from 'pubsub-js'
-import ErrorIcon from "@material-ui/icons/ErrorOutline";
 import { CircularProgress } from '@material-ui/core';
 
 var dispatch
@@ -47,7 +46,7 @@ class Login extends React.Component {
       if (logged) {
         this.props.history.push("/")
       } else {
-        PubSub.notif({ txt: "Impossible de vous connecter. Verrifiez vos identidiants", icon: ErrorIcon, color: "danger" })
+        PubSub.notif({ txt: "Impossible de vous connecter. Verrifiez vos identidiants", color: "danger" })
       }
     })
 
