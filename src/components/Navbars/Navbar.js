@@ -12,30 +12,44 @@ import Menu from "@material-ui/icons/Menu";
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks.js";
 import Button from "components/CustomButtons/Button.js";
-
+import { matchPath } from "react-router";
 import styles from "assets/jss/material-dashboard-react/components/headerStyle.js";
+import { Icon } from "@material-ui/core";
+import { withRouter } from "react-router";
 
 const useStyles = makeStyles(styles);
 
-export default function Header(props) {
+const header = function Header(props) {
   const classes = useStyles();
-  function getRoute() {
-    return props.routes.find(prop => {
-      return (window.location.pathname === prop.layout + prop.path || window.location.pathname === prop.layout + prop.path + "/")
-    });
+  function getRoute(routes) {
+    for (let id = 0; id < routes.length; id++) {
+      const prop = routes[id];
+      if (!(prop.path === "/" && !prop.layout)) {
+        const himself = matchPath(window.location.pathname, {
+          path: (prop.layout || "") + prop.path + (prop.params || ""),
+          exact: true
+        })
+        if (himself) return prop
+        if (prop.children) {
+          const child = getRoute(prop.children)
+          if (child) return { ...child, isChild: true }
+        }
+      }
+    }
   }
   const { color } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color
   });
-  if (!getRoute() || getRoute().hideHeader) return null
+  const currentRoute = getRoute(props.routes)
+  if (!currentRoute || currentRoute.hideHeader) return null
   return (
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
-          {/* Here we create navbar brand, based on route name */}
+          {currentRoute.isChild && <IconButton onClick={_ => props.history.goBack()}><Icon style={{ color: "white" }}>arrow_back</Icon></IconButton>}
           <Button color="transparent" href="#" className={classes.title}>
-            {getRoute().name}
+            {currentRoute.name}
           </Button>
         </div>
         <Hidden smDown implementation="css">
@@ -55,9 +69,11 @@ export default function Header(props) {
   );
 }
 
-Header.propTypes = {
+header.propTypes = {
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"]),
   rtlActive: PropTypes.bool,
   handleDrawerToggle: PropTypes.func,
   routes: PropTypes.arrayOf(PropTypes.object)
 };
+
+export default withRouter(header)

@@ -16,16 +16,16 @@
 
 */
 // @material-ui/icons
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import LogOutIcon from "@material-ui/icons/ExitToApp";
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import Login from "views/Login.js";
 // core components/views for Admin layout
 import LogOutPage from "views/Logout.js";
+import FormEditor from "views/Form/FormEditor.js";
+import FormList from "views/Form/FormList.js";
 import Welcome from "views/Welcome.js";
 // core components/views for RTL layout
 
-//ROLE: null = not loged, [1, 2, 3...] = only for 1 OR 2 OR 3, [] = logged
+//ROLE: null = not loged, [1, 2, 3...] = only for 1 OR 2 OR 3, [] = logged, undefined = for all
 
 const dashboardRoutes = [
   {
@@ -39,7 +39,7 @@ const dashboardRoutes = [
   {
     path: "/login",
     name: "Se connecter",
-    icon: DashboardIcon,
+    icon: "lock",
     component: Login,
     hideHeader: true,
     role: null,
@@ -52,10 +52,38 @@ const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    icon: DashboardIcon,
+    icon: "dashboard",
     component: DashboardPage,
     layout: "/admin",
     role: [1, 2]
+  },
+  {
+    path: "/form/",
+    name: "Form List",
+    icon: "list_alt",
+    component: FormList,
+    children: [
+      {
+        path: "/view/",
+        layout: "/form",
+        params: ":id/:edit?",
+        defaultParams: "new",
+        sideName: "New Form",
+        icon: "post_add",
+        name: "Form Editor",
+        hidden: true,
+        component: FormEditor,
+      },
+      {
+        path: "/view/new",
+        layout: "/form",
+        sideName: "New Form",
+        icon: "post_add",
+        name: "Form Editor",
+        hidden: false,
+        component: FormEditor,
+      },
+    ]
   },
   {
     type: "separator",
@@ -64,7 +92,7 @@ const dashboardRoutes = [
   {
     path: "/logout",
     name: "Déconnexion",
-    icon: LogOutIcon,
+    icon: "exit_to_app",
     component: LogOutPage,
     role: []
   },

@@ -12,6 +12,16 @@ const reducer = function (state = defaultState, action) {
         ...state,
         user: action.payload
       };
+    case Actions.SET_USERS:
+      return {
+        ...state,
+        users: action.payload
+      };
+    case Actions.SET_EDIT_USER:
+      return {
+        ...state,
+        editUser: action.payload
+      };
     case Actions.SET_TOKEN:
       axios.defaults.headers.common['Authorization'] = 'Token ' + action.payload;
       if (action.remember)

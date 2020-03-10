@@ -1,0 +1,43 @@
+.formauto * {
+	font-size: 20px;
+	margin-right: 5px;
+}
+
+.formauto #root {
+	border: none;
+}
+
+.formauto .form-group {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+}
+
+.formauto .form-control {
+	border-radius: 5px;
+	border-width: 1px;
+	border-color: #727272;
+	border-style: solid;
+	padding: 3px;
+	padding-left: 5px;
+	width: auto;
+}
+
+.formauto label {
+	font-weight: bold;
+	color: black;
+}
+
+.formauto span {
+	font-weight: normal;
+}
+
+.formauto fieldset fieldset {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.formauto legend {
+	font-weight: bold;
+	margin-bottom: 10px;
+}

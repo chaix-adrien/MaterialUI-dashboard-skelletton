@@ -19,31 +19,34 @@ import { siteName } from "variables/config.json"
 
 let ps;
 
-const switchRoutes = (classes) => (
-  <Switch>
-    {routes.map((prop, key) => {
-
-      if (prop.path)
-        return (
-          <Route
-            exact
-            path={(prop.layout || "") + prop.path}
-            render={(props) => {
-              if (prop.hideHeader)
-                return <prop.component {...props} />
-              else
-                return <><div className={classes.headerFill} />
-                  <prop.component {...props} />
-                </>
-            }}
-            key={key}
-          />
-        )
-      else return null
-    })}
-    <Route component={View404} />
-  </Switch>
-);
+const switchRoutes = (_routes, classes) => {
+  let out = _routes.map((prop, key) => {
+    if (prop.path)
+      return (
+        <Route
+          exact
+          path={(prop.layout || "") + prop.path + (prop.params || "")}
+          render={(props) => {
+            if (prop.hideHeader)
+              return <prop.component {...props} />
+            else
+              return <>
+                <div className={classes.headerFill} />
+                <prop.component {...props} />
+              </>
+          }}
+          key={key}
+        />
+      )
+    else return null
+  })
+  _routes.forEach(prop => {
+    if (prop.children) {
+      out = out.concat(switchRoutes(prop.children, classes))
+    }
+  })
+  return out
+}
 
 const useStyles = makeStyles(styles);
 
@@ -96,7 +99,12 @@ export default function Admin({ ...rest }) {
         />
         <div className={classes.content}>
 
-          <div className={classes.container}>{switchRoutes(classes)}</div>
+          <div className={classes.container}>
+            <Switch>
+              {switchRoutes(routes, classes)}
+              <Route component={View404} />
+            </Switch>
+          </div>
         </div>
       </div>
     </div>

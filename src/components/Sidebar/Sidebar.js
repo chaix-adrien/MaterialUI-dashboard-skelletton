@@ -18,6 +18,7 @@ import React from "react";
 import { useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { siteName } from "variables/config.json"
+import { matchPath } from "react-router";
 
 
 const useStyles = makeStyles(styles);
@@ -26,14 +27,18 @@ export default function Sidebar(props) {
   const user = useSelector(({ reducer: { user } }) => user);
   const classes = useStyles();
   // verifies if routeName is the one active (in browser input)
-  function activeRoute(routeName) {
-    return window.location.pathname === routeName || window.location.pathname === routeName + "/";
+  function activeRoute(prop) {
+    return matchPath(window.location.pathname, {
+      path: (prop.layout || "") + prop.path + (prop.params || ""),
+      exact: !prop.children
+    });
   }
-  const { color, logo, image, logoText, routes } = props;
-  var links = (
-    <List className={classes.list}>
+
+  function handleRoutesLinks(routes, parentKey = "") {
+    return <List className={classes.list} style={{ width: parentKey.length ? "90%" : "100%", marginLeft: "auto" }}>
       {routes.map((prop, key) => {
-        if (prop.path && activeRoute((prop.layout || "") + prop.path))
+        key = parentKey + "_" + key
+        if (prop.path && activeRoute(prop))
           window.document.title = siteName + " " + (prop.tabTitle || prop.name)
         if (prop.hidden) return null
         if (prop.role === null && user) return null
@@ -43,14 +48,14 @@ export default function Sidebar(props) {
         if (prop.type === "title") return <Typography key={key} className={classes.title}>{prop.text}</Typography>
         var listItemClasses;
         listItemClasses = classNames({
-          [" " + classes[color]]: activeRoute((prop.layout || "") + prop.path)
+          [" " + classes[color]]: activeRoute(prop)
         });
         const whiteFontClasses = classNames({
-          [" " + classes.whiteFont]: activeRoute((prop.layout || "") + prop.path)
+          [" " + classes.whiteFont]: activeRoute(prop)
         });
-        return (
+        return (<div key={key}>
           <NavLink
-            to={(prop.layout || "") + prop.path}
+            to={(prop.layout || "") + prop.path + (prop.defaultParams || "")}
             className={classes.item}
             activeClassName="active"
             key={key}
@@ -72,7 +77,7 @@ export default function Sidebar(props) {
                   />
                 )}
               <ListItemText
-                primary={props.rtlActive ? prop.rtlName : prop.name}
+                primary={prop.sideName || prop.name}
                 className={classNames(classes.itemText, whiteFontClasses, {
                   [classes.itemTextRTL]: props.rtlActive
                 })}
@@ -80,10 +85,18 @@ export default function Sidebar(props) {
               />
             </ListItem>
           </NavLink>
-        );
+          {activeRoute(prop) && prop.children && handleRoutesLinks(prop.children, key)}
+        </div>)
       })}
-      <Footer />
     </List>
+  }
+
+  const { color, logo, image, logoText, routes } = props;
+  var links = (
+    <>
+      {handleRoutesLinks(routes)}
+      < Footer />
+    </>
   );
   var brand = (
     <div className={classes.logo}>
