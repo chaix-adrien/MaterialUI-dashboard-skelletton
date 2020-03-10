@@ -1,0 +1,7 @@
+{
+  "siteName": "TEMPLATE",
+  "googleLogin": true,
+  "facebookLogin": true,
+  "googleClientId": "GoogleClientId",
+  "facebookClientId": "FacebookClientId"
+}

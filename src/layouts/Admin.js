@@ -12,21 +12,30 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import routes from "routes.js";
 import View404 from "views/View404.js";
+import { siteName } from "variables/config.json"
 
 
 
 
 let ps;
 
-const switchRoutes = (
+const switchRoutes = (classes) => (
   <Switch>
     {routes.map((prop, key) => {
+
       if (prop.path)
         return (
           <Route
             exact
             path={(prop.layout || "") + prop.path}
-            component={prop.component}
+            render={(props) => {
+              if (prop.hideHeader)
+                return <prop.component {...props} />
+              else
+                return <><div className={classes.headerFill} />
+                  <prop.component {...props} />
+                </>
+            }}
             key={key}
           />
         )
@@ -39,28 +48,9 @@ const switchRoutes = (
 const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
-  // styles
   const classes = useStyles();
-  // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
-  // states and functions
-  const [image, setImage] = React.useState(bgImage);
-  const [color, setColor] = React.useState("blue");
-  const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const handleImageClick = image => {
-    setImage(image);
-  };
-  const handleColorClick = color => {
-    setColor(color);
-  };
-  const handleFixedClick = () => {
-    if (fixedClasses === "dropdown") {
-      setFixedClasses("dropdown show");
-    } else {
-      setFixedClasses("dropdown");
-    }
-  };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -69,7 +59,7 @@ export default function Admin({ ...rest }) {
       setMobileOpen(false);
     }
   };
-  // initialize and destroy the PerfectScrollbar plugin
+
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
@@ -79,7 +69,6 @@ export default function Admin({ ...rest }) {
       document.body.style.overflow = "hidden";
     }
     window.addEventListener("resize", resizeFunction);
-    // Specify how to clean up after this effect:
     return function cleanup() {
       if (navigator.platform.indexOf("Win") > -1) {
         ps.destroy();
@@ -91,12 +80,12 @@ export default function Admin({ ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
-        logoText={window.siteName}
+        logoText={siteName}
         logo={window.siteLogo}
-        image={image}
+        image={bgImage}
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
-        color={color}
+        color={"blue"}
         {...rest}
       />
       <div className={classes.mainPanel} ref={mainPanel}>
@@ -105,13 +94,10 @@ export default function Admin({ ...rest }) {
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />
-        {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
         <div className={classes.content}>
-          <div className={classes.headerFill} />
-          <div className={classes.container}>{switchRoutes}</div>
+
+          <div className={classes.container}>{switchRoutes(classes)}</div>
         </div>
-
-
       </div>
     </div>
   );

@@ -20,7 +20,9 @@ import { withRouter } from "react-router";
 import * as Actions from 'redux/actions';
 import reducer from 'redux/reducers';
 import withReducer from "redux/withReducer";
-
+import { GoogleLogin } from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
+import { googleClientId, facebookClientId, googleLogin, facebookLogin } from "variables/config.json"
 var dispatch
 
 class Login extends React.Component {
@@ -35,9 +37,10 @@ class Login extends React.Component {
     dispatch = this.props.dispatch
   }
 
-  login = () => {
+  login = (loginData) => {
     this.setState({ login: true })
-    dispatch(Actions.login(this.state.email, this.state.password, this.state.remember)).then(logged => {
+    loginData.remember = this.state.remember
+    dispatch(Actions.login(loginData)).then(logged => {
       this.setState({ login: false })
       if (logged) {
         this.props.history.push("/")
@@ -45,7 +48,6 @@ class Login extends React.Component {
         PubSub.notif({ txt: "Impossible de vous connecter. Verrifiez vos identidiants", color: "danger" })
       }
     })
-
   }
 
   render() {
@@ -94,17 +96,39 @@ class Login extends React.Component {
               label="Se souvenir de moi"
             />
             <div style={{ margin: 5, display: "flex", justifyContent: "center" }}>
-
               {login ? <CircularProgress /> : <Button
                 fullWidth
                 variant="contained"
                 color="primary"
-                onClick={this.login}
+                onClick={_ => this.login({ type: "legacy", email, password })}
                 className={c.submit}
               >
                 SE CONNECTER
             </Button>}
             </div>
+            <h3 style={{ textAlign: "center", marginTop: 0 }}>OU</h3>
+            {googleLogin &&
+              <div style={{ width: "100%", display: "flex", justifyContent: "center", flexDirection: "column", marginBottom: 30 }}>
+                <GoogleLogin
+                  clientId={googleClientId}
+                  buttonText="Se connecter avec Google"
+                  onSuccess={rep => this.login({ type: "google", token: rep.tokenObj.access_token })}
+                  onFailure={_ => PubSub.notif({ txt: "Une erreur est survenue pendant votre connexion avec Google. Veuillez réessayer plus tard.", color: "danger" })}
+                  style={{ width: "100%" }}
+                  cookiePolicy={'single_host_origin'}
+                />
+              </div>
+            }
+            {facebookLogin &&
+              <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", marginBottom: 30 }}>
+                <FacebookLogin
+                  appId={facebookClientId}
+                  autoLoad={true}
+                  textButton="Se connecter avec Facebook"
+                  fields="name,email,picture"
+                  callback={console.log} />
+              </div>
+            }
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -128,7 +152,8 @@ class Login extends React.Component {
 
 const styles = theme => ({
   root: {
-    height: "99%"
+    height: "98%",
+    marginTop: "1%"
   },
   image: {
     backgroundImage: 'url(https://source.unsplash.com/random)',

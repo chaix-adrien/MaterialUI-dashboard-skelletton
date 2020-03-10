@@ -41,6 +41,7 @@ const dashboardRoutes = [
     name: "Se connecter",
     icon: DashboardIcon,
     component: Login,
+    hideHeader: true,
     role: null,
   },
   {

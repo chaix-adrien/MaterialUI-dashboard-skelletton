@@ -1,23 +1,24 @@
 /*eslint-disable*/
-import React from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
+import Icon from "@material-ui/core/Icon";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Icon from "@material-ui/core/Icon";
-import { useDispatch, useSelector } from 'react-redux';
+// @material-ui/core components
+import { makeStyles } from "@material-ui/core/styles";
+import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
+import classNames from "classnames";
+import Footer from "components/Footer/Footer";
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
+import PropTypes from "prop-types";
+import React from "react";
+import { useSelector } from 'react-redux';
+import { NavLink } from "react-router-dom";
+import { siteName } from "variables/config.json"
 
-import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
-import Footer from "components/Footer/Footer"
-import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(styles);
 
@@ -33,7 +34,7 @@ export default function Sidebar(props) {
     <List className={classes.list}>
       {routes.map((prop, key) => {
         if (prop.path && activeRoute((prop.layout || "") + prop.path))
-          window.document.title = window.siteName + " " + (prop.tabTitle || prop.name)
+          window.document.title = siteName + " " + (prop.tabTitle || prop.name)
         if (prop.hidden) return null
         if (prop.role === null && user) return null
         if (prop.role && !user) return null

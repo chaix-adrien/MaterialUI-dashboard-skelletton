@@ -2,15 +2,15 @@ import axios from "axios.js";
 
 export const SET_USER = "[USER APP] SET_USER";
 export const SET_TOKEN = "[USER APP] SET_TOKEN";
-export function login(email, password, remember = true) {
-  const request = axios.post("/user/login", { email, password });
+export function login(data) {
+  const request = axios.post("/user/login", data);
   return dispatch =>
     request
       .then(response => {
         dispatch({
           type: SET_TOKEN,
           payload: response.data.user.token,
-          remember,
+          remember: data.remember,
         })
         return axios.get("/user/me").then(rep => {
           dispatch({

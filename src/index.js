@@ -16,6 +16,7 @@
 
 */
 import "assets/css/material-dashboard-react.css?v=1.8.0";
+import { siteName } from "variables/config.json"
 import logo from "assets/img/reactlogo.png";
 import Notifier from "components/Snackbar/Notifier";
 import { createBrowserHistory } from "history";
@@ -27,9 +28,8 @@ import store from './redux';
 import Router from "./Router.js";
 const hist = createBrowserHistory();
 
-window.siteName = "TEMPLATE"
 window.siteLogo = logo
-window.document.title = window.siteName
+window.document.title = siteName
 
 ReactDOM.render(
   <Provider store={store}>
