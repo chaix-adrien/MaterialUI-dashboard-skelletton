@@ -12,12 +12,10 @@ class Notifier extends React.Component {
 
   componentDidMount() {
     this.sub = PubSub.subscribe('NOTIF', (_, notif) => this.setState({ notif }));
-    //dispatch(Actions.getFiches())
   }
 
   componentWillUnmount() {
     PubSub.unsubscribe(this.sub)
-
   }
 
   render() {

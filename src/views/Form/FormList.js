@@ -7,6 +7,7 @@ import reducer from 'redux/reducers';
 import * as Actions from 'redux/actions';
 import { withRouter } from "react-router";
 import MaterialTable from "material-table";
+import PubSub from 'pubsub-js'
 
 var dispatch
 
@@ -45,7 +46,7 @@ class FormList extends React.Component {
           {
             icon: 'delete',
             tooltip: "Supprimer le formulaire",
-            onClick: (event, rowData) => console.log(rowData)
+            onClick: (event, rowData) => PubSub.confirm({ title: "Supprimer l'element ?", subtitle: "Cette action est irreversible.", onAgree: _ => console.log("SUPRIMER", rowData) })
           },
           {
             icon: 'add',
