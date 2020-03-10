@@ -38,6 +38,7 @@ export default class Confirm extends React.PureComponent {
           open={confirm ? true : false}
           onClose={_ => this.setState({ confirm: null })}
           aria-labelledby="alert-dialog-title"
+          PaperProps={{ style: { minWidth: 400, minHeight: 200 } }}
           aria-describedby="alert-dialog-description"
         >
           {confirm.title && <DialogTitle id="alert-dialog-title">{confirm.title}</DialogTitle>}
