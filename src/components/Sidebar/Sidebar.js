@@ -34,7 +34,7 @@ export default function Sidebar(props) {
     });
   }
 
-  function handleRoutesLinks(routes, parentKey = "") {
+  function handleRoutesLinks(routes, parentKey = "", mobile) {
     return <List className={classes.list} style={{ width: parentKey.length ? "90%" : "100%", marginLeft: "auto" }}>
       {routes.map((prop, key) => {
         key = parentKey + "_" + key
@@ -57,6 +57,7 @@ export default function Sidebar(props) {
           <NavLink
             to={(prop.layout || "") + prop.path + (prop.defaultParams || "")}
             className={classes.item}
+            onClick={mobile ? props.handleDrawerToggle : undefined}
             activeClassName="active"
             key={key}
           >
@@ -92,9 +93,9 @@ export default function Sidebar(props) {
   }
 
   const { color, logo, image, logoText, routes } = props;
-  var links = (
+  var links = (mobile) => (
     <>
-      {handleRoutesLinks(routes)}
+      {handleRoutesLinks(routes, "", mobile)}
       < Footer />
     </>
   );
@@ -132,7 +133,7 @@ export default function Sidebar(props) {
           {brand}
           <div className={classes.sidebarWrapper}>
             <AdminNavbarLinks />
-            {links}
+            {links(true)}
           </div>
           {image !== undefined ? (
             <div
@@ -154,7 +155,7 @@ export default function Sidebar(props) {
           }}
         >
           {brand}
-          <div className={classes.sidebarWrapper}>{links}</div>
+          <div className={classes.sidebarWrapper}>{links(false)}</div>
           {image !== undefined ? (
             <div
               className={classes.background}

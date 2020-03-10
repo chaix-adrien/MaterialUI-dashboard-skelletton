@@ -10,13 +10,14 @@ import { withRouter } from "react-router";
 import { Button } from '@material-ui/core';
 import "assets/css/form-auto.css";
 import Card from "components/Card/Card.js";
+import CardBody from "components/Card/CardBody.js";
+import CardHeader from "components/Card/CardHeader.js";
 var dispatch
 
 class FormEditor extends React.Component {
   constructor(props) {
     super(props)
     dispatch = this.props.dispatch
-    console.log(props)
     this.isNew = props.match.params.id === "new"
     this.edit = props.match.params.edit ? true : false
     this.readOnly = !this.isNew && !this.edit
@@ -70,15 +71,21 @@ class FormEditor extends React.Component {
 
   render() {
     const c = this.props.classes
+    const { editUser } = this.props
     return (<div className={c.container}>
       <Card className={c.formCard + " formauto"} >
-        <Form schema={this.getFormSchema()}
-          ref={e => this.form = e}
-          noValidate={true}
-          onSubmit={this.onSubmit}
-          onError={console.log} >
-          <Button color="primary" type="submit" variant="contained" style={{ visibility: this.readOnly ? "hidden" : "visible", margin: "auto", display: "flex", marginBottom: 15 }} className={this.readOnly ? "hidden" : ""}>Valider</Button>
-        </Form>
+        <CardHeader color="info">
+          <h4 style={{ textAlign: "center" }}>{editUser ? (editUser.prenom + " " + editUser.nom) : "Nouveau Formulaire"}</h4>
+        </CardHeader>
+        <CardBody>
+          <Form schema={this.getFormSchema()}
+            ref={e => this.form = e}
+            noValidate={true}
+            onSubmit={this.onSubmit}
+            onError={console.log} >
+            <Button color="primary" type="submit" variant="contained" style={{ visibility: this.readOnly ? "hidden" : "visible", margin: "auto", display: "flex", marginBottom: 15 }} className={this.readOnly ? "hidden" : ""}>Valider</Button>
+          </Form>
+        </CardBody>
       </Card>
     </div>)
   }
@@ -86,6 +93,7 @@ class FormEditor extends React.Component {
 
 const styles = theme => ({
   container: {
+    margin: 50
   },
   formCard: {
     maxWidth: 600,
