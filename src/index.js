@@ -17,7 +17,7 @@
 */
 import "assets/css/material-dashboard-react.css?v=1.8.0";
 import { siteName } from "variables/config.json"
-import logo from "assets/img/reactlogo.png";
+import logo from "assets/img/Logo.png";
 import Notifier from "components/Snackbar/Notifier";
 import Confirm from "components/Confirm";
 import { createBrowserHistory } from "history";
@@ -31,7 +31,6 @@ const hist = createBrowserHistory();
 
 window.siteLogo = logo
 window.document.title = siteName
-
 ReactDOM.render(
   <Provider store={store}>
     <Notifier />

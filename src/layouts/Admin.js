@@ -1,6 +1,6 @@
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import bgImage from "assets/img/sidebar-2.jpg";
+import bgImage from "assets/img/Sidebar.jpg";
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 // core components
 import Navbar from "components/Navbars/Navbar.js";
