@@ -9,11 +9,15 @@ import {
   successColor,
   warningColor,
   dangerColor,
-  whiteColor,
+  whiteColor as tempWhite,
   grayColor,
-  blackColor,
-  hexToRgb
+  blackColor as tempBlack,
+  hexToRgb,
+  darkComponents,
 } from "assets/jss/material-dashboard-react.js";
+
+const whiteColor = darkComponents.sideBar ? tempBlack : tempWhite
+const blackColor = !darkComponents.sideBar ? tempBlack : tempWhite
 
 const sidebarStyle = theme => ({
   drawerPaper: {
@@ -191,7 +195,7 @@ const sidebarStyle = theme => ({
   },
   title: {
     ...defaultFont,
-    color: "white",
+    color: whiteColor,
     marginLeft: 10
   },
   whiteFont: {
