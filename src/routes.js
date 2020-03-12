@@ -16,13 +16,13 @@
 
 */
 // @material-ui/icons
-import DashboardPage from "views/Dashboard/Dashboard.js";
-import Login from "views/Login.js";
+import DashboardPage from "views/Dashboard/Dashboard.js"
+import Login from "views/Login.js"
 // core components/views for Admin layout
-import LogOutPage from "views/Logout.js";
-import FormEditor from "views/Form/FormEditor.js";
-import FormList from "views/Form/FormList.js";
-import Welcome from "views/Welcome.js";
+import LogOutPage from "views/Logout.js"
+import FormEditor from "views/Form/FormEditor.js"
+import FormList from "views/Form/FormList.js"
+import Welcome from "views/Welcome.js"
 // core components/views for RTL layout
 
 //ROLE: null = not loged, [1, 2, 3...] = only for 1 OR 2 OR 3, [] = logged, undefined = for all
@@ -47,7 +47,7 @@ const dashboardRoutes = [
   {
     type: "title",
     text: "Administrateur",
-    role: [1]
+    role: [1],
   },
   {
     path: "/dashboard",
@@ -55,7 +55,7 @@ const dashboardRoutes = [
     icon: "dashboard",
     component: DashboardPage,
     layout: "/admin",
-    role: [1, 2]
+    role: [1, 2],
   },
   {
     path: "/form/",
@@ -83,19 +83,20 @@ const dashboardRoutes = [
         hidden: false,
         component: FormEditor,
       },
-    ]
+    ],
   },
   {
     type: "separator",
-    role: []
+    role: [],
   },
   {
     path: "/logout",
     name: "Déconnexion",
     icon: "exit_to_app",
     component: LogOutPage,
-    role: []
+    bottom: 10,
+    role: [],
   },
-];
+]
 
-export default dashboardRoutes;
+export default dashboardRoutes
