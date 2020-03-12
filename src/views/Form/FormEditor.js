@@ -7,10 +7,10 @@ import reducer from 'redux/reducers';
 import Form from "react-jsonschema-form";
 import * as Actions from 'redux/actions';
 import { withRouter } from "react-router";
-import { Button } from '@material-ui/core';
 import "assets/css/form-auto.css";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
+import Button from "components/CustomButtons/Button.js";
 import CardHeader from "components/Card/CardHeader.js";
 var dispatch
 
@@ -63,17 +63,18 @@ class FormEditor extends React.Component {
         cp: { ...getDefault("cp"), type: "integer", title: "Code Postal", readOnly },
         ville: { ...getDefault("ville"), type: "string", title: "Ville", readOnly },
         telephone: { ...getDefault("telephone"), type: "integer", title: "Téléphone", readOnly },
-        password: { ...getDefault("password"), type: "string", format: "email", title: "Mot de passe", readOnly },
+        ...(!this.readOnly ? { password: { ...getDefault("password"), type: "string", format: "email", title: "Mot de passe", readOnly } } : {}),
         role: { ...getDefault("role"), default: 2, title: "Role", readOnly, enum: [1, 2, 3], enumNames: ["Formateur", "Administrateur", "Responsable"] },
       }
     }
   }
 
   render() {
+    console.log("new", this.isNew, "edit", this.edit)
     const c = this.props.classes
     const { editUser } = this.props
     return (<div className={c.container}>
-      <Card className={c.formCard + " formauto"} >
+      <Card className={c.formCard + " formauto " + (this.readOnly ? " formReadOnly" : "")} >
         <CardHeader color="info">
           <h4 style={{ textAlign: "center" }}>{editUser ? (editUser.prenom + " " + editUser.nom) : "Nouveau Formulaire"}</h4>
         </CardHeader>
