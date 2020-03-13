@@ -30,10 +30,14 @@ import Router from "./Router.js"
 const hist = createBrowserHistory()
 
 const setState = React.Component.prototype.setState
-React.Component.prototype.setState = function(newState) {
-  return new Promise(resolve => setState.call(this, newState, resolve))
+React.Component.prototype.setState = function(newState, cb) {
+  return new Promise(resolve =>
+    setState.call(this, newState, _ => {
+      if (cb) cb()
+      resolve()
+    })
+  )
 }
-
 window.siteLogo = logo
 window.document.title = siteName
 ReactDOM.render(
