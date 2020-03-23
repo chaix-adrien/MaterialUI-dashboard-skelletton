@@ -21,6 +21,7 @@ import logo from "assets/img/Logo.png"
 import Notifier from "components/Snackbar/Notifier"
 import Confirm from "components/Confirm"
 import { createBrowserHistory } from "history"
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles"
 import React from "react"
 import ReactDOM from "react-dom"
 import Provider from "react-redux/es/components/Provider"
@@ -28,6 +29,23 @@ import { Router as DomRouter } from "react-router-dom"
 import store from "./redux"
 import Router from "./Router.js"
 const hist = createBrowserHistory()
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: primaryColor[0],
+      main: primaryColor[2],
+      dark: primaryColor[3],
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: secondaryColor[0],
+      main: secondaryColor[2],
+      dark: secondaryColor[3],
+      contrastText: "#fff",
+    },
+  },
+})
 
 const setState = React.Component.prototype.setState
 React.Component.prototype.setState = function(newState, cb) {
@@ -42,11 +60,18 @@ window.siteLogo = logo
 window.document.title = siteName
 ReactDOM.render(
   <Provider store={store}>
-    <Notifier />
-    <Confirm />
-    <DomRouter history={hist}>
-      <Router />
-    </DomRouter>
+    <MuiThemeProvider theme={theme}>
+      <Notifier />
+      <Confirm />
+      <DomRouter history={hist}>
+        <Router />
+      </DomRouter>
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById("root")
 )
+
+/**
+ * TODO:
+ * add https://github.com/cybertec-postgresql/rjsf-material-ui
+ */

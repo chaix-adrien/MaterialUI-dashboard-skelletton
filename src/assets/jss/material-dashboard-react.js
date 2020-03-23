@@ -21,72 +21,66 @@
 // // // Example: input = #999 => output = 153, 153, 153
 // // // Example: input = 999 => output = 153, 153, 153
 // #############################
-import Values from 'values.js'
-
+import Values from "values.js"
 
 const hexToRgb = input => {
-  input = input + "";
-  input = input.replace("#", "");
-  let hexRegex = /[0-9A-Fa-f]/g;
+  input = input + ""
+  input = input.replace("#", "")
+  let hexRegex = /[0-9A-Fa-f]/g
   if (!hexRegex.test(input) || (input.length !== 3 && input.length !== 6)) {
-    throw new Error("input is not a valid hex color.");
+    throw new Error("input is not a valid hex color.")
   }
   if (input.length === 3) {
-    let first = input[0];
-    let second = input[1];
-    let last = input[2];
-    input = first + first + second + second + last + last;
+    let first = input[0]
+    let second = input[1]
+    let last = input[2]
+    input = first + first + second + second + last + last
   }
-  input = input.toUpperCase(input);
-  let first = input[0] + input[1];
-  let second = input[2] + input[3];
-  let last = input[4] + input[5];
-  return (
-    parseInt(first, 16) +
-    ", " +
-    parseInt(second, 16) +
-    ", " +
-    parseInt(last, 16)
-  );
-};
+  input = input.toUpperCase(input)
+  let first = input[0] + input[1]
+  let second = input[2] + input[3]
+  let last = input[4] + input[5]
+  return parseInt(first, 16) + ", " + parseInt(second, 16) + ", " + parseInt(last, 16)
+}
 
 // ##############################
 // // // Variables - Styles that are used on more than one component
 // #############################
 
-const drawerWidth = 260;
+const drawerWidth = 260
 
 const transition = {
-  transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
-};
+  transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)",
+}
 
 const container = {
   paddingRight: "15px",
   paddingLeft: "15px",
   marginRight: "auto",
-  marginLeft: "auto"
-};
+  marginLeft: "auto",
+}
 
 const defaultFont = {
   fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   fontWeight: "300",
-  lineHeight: "1.5em"
-};
-
-const darkComponents = {
-  sideBar: false
+  lineHeight: "1.5em",
 }
 
-const primaryColor = new Values("#2e7d32").shades(4).map(c => "#" + c.hex);
-const warningColor = new Values("#ffa726").shades(4).map(c => "#" + c.hex);
-const successColor = new Values("#66bb6a").shades(4).map(c => "#" + c.hex);
-const dangerColor = new Values("#ef5350").shades(4).map(c => "#" + c.hex);
-const infoColor = new Values("#26c6da").shades(4).map(c => "#" + c.hex);
-const roseColor = new Values("#ec407a").shades(4).map(c => "#" + c.hex);
-const grayColor = new Values("#DDD").shades(12).map(c => "#" + c.hex);
+const darkComponents = {
+  sideBar: false,
+}
 
-const blackColor = "#000";
-const whiteColor = "#fff";
+const primaryColor = new Values("#2e7d32").shades(4).map(c => "#" + c.hex)
+const secondaryColor = new Values("#23b6c9").shades(4).map(c => "#" + c.hex)
+const warningColor = new Values("#ffa726").shades(4).map(c => "#" + c.hex)
+const successColor = new Values("#66bb6a").shades(4).map(c => "#" + c.hex)
+const dangerColor = new Values("#ef5350").shades(4).map(c => "#" + c.hex)
+const infoColor = new Values("#26c6da").shades(4).map(c => "#" + c.hex)
+const roseColor = new Values("#ec407a").shades(4).map(c => "#" + c.hex)
+const grayColor = new Values("#DDD").shades(12).map(c => "#" + c.hex)
+
+const blackColor = "#000"
+const whiteColor = "#fff"
 
 const boxShadow = {
   boxShadow:
@@ -96,102 +90,66 @@ const boxShadow = {
     hexToRgb(blackColor) +
     ", 0.12), 0 8px 10px -5px rgba(" +
     hexToRgb(blackColor) +
-    ", 0.2)"
-};
+    ", 0.2)",
+}
 
 const primaryBoxShadow = {
-  boxShadow:
-    "0 4px 20px 0 rgba(" +
-    hexToRgb(blackColor) +
-    ",.14), 0 7px 10px -5px rgba(" +
-    hexToRgb(primaryColor[0]) +
-    ",.4)"
-};
+  boxShadow: "0 4px 20px 0 rgba(" + hexToRgb(blackColor) + ",.14), 0 7px 10px -5px rgba(" + hexToRgb(primaryColor[0]) + ",.4)",
+}
 const infoBoxShadow = {
-  boxShadow:
-    "0 4px 20px 0 rgba(" +
-    hexToRgb(blackColor) +
-    ",.14), 0 7px 10px -5px rgba(" +
-    hexToRgb(infoColor[0]) +
-    ",.4)"
-};
+  boxShadow: "0 4px 20px 0 rgba(" + hexToRgb(blackColor) + ",.14), 0 7px 10px -5px rgba(" + hexToRgb(infoColor[0]) + ",.4)",
+}
 const successBoxShadow = {
-  boxShadow:
-    "0 4px 20px 0 rgba(" +
-    hexToRgb(blackColor) +
-    ",.14), 0 7px 10px -5px rgba(" +
-    hexToRgb(successColor[0]) +
-    ",.4)"
-};
+  boxShadow: "0 4px 20px 0 rgba(" + hexToRgb(blackColor) + ",.14), 0 7px 10px -5px rgba(" + hexToRgb(successColor[0]) + ",.4)",
+}
 const warningBoxShadow = {
-  boxShadow:
-    "0 4px 20px 0 rgba(" +
-    hexToRgb(blackColor) +
-    ",.14), 0 7px 10px -5px rgba(" +
-    hexToRgb(warningColor[0]) +
-    ",.4)"
-};
+  boxShadow: "0 4px 20px 0 rgba(" + hexToRgb(blackColor) + ",.14), 0 7px 10px -5px rgba(" + hexToRgb(warningColor[0]) + ",.4)",
+}
 const dangerBoxShadow = {
-  boxShadow:
-    "0 4px 20px 0 rgba(" +
-    hexToRgb(blackColor) +
-    ",.14), 0 7px 10px -5px rgba(" +
-    hexToRgb(dangerColor[0]) +
-    ",.4)"
-};
+  boxShadow: "0 4px 20px 0 rgba(" + hexToRgb(blackColor) + ",.14), 0 7px 10px -5px rgba(" + hexToRgb(dangerColor[0]) + ",.4)",
+}
 const roseBoxShadow = {
-  boxShadow:
-    "0 4px 20px 0 rgba(" +
-    hexToRgb(blackColor) +
-    ",.14), 0 7px 10px -5px rgba(" +
-    hexToRgb(roseColor[0]) +
-    ",.4)"
-};
+  boxShadow: "0 4px 20px 0 rgba(" + hexToRgb(blackColor) + ",.14), 0 7px 10px -5px rgba(" + hexToRgb(roseColor[0]) + ",.4)",
+}
 
 const warningCardHeader = {
-  background:
-    "linear-gradient(60deg, " + warningColor[1] + ", " + warningColor[2] + ")",
-  ...warningBoxShadow
-};
+  background: "linear-gradient(60deg, " + warningColor[1] + ", " + warningColor[2] + ")",
+  ...warningBoxShadow,
+}
 const successCardHeader = {
-  background:
-    "linear-gradient(60deg, " + successColor[1] + ", " + successColor[2] + ")",
-  ...successBoxShadow
-};
+  background: "linear-gradient(60deg, " + successColor[1] + ", " + successColor[2] + ")",
+  ...successBoxShadow,
+}
 const dangerCardHeader = {
-  background:
-    "linear-gradient(60deg, " + dangerColor[1] + ", " + dangerColor[2] + ")",
-  ...dangerBoxShadow
-};
+  background: "linear-gradient(60deg, " + dangerColor[1] + ", " + dangerColor[2] + ")",
+  ...dangerBoxShadow,
+}
 const infoCardHeader = {
-  background:
-    "linear-gradient(60deg, " + infoColor[1] + ", " + infoColor[2] + ")",
-  ...infoBoxShadow
-};
+  background: "linear-gradient(60deg, " + infoColor[1] + ", " + infoColor[2] + ")",
+  ...infoBoxShadow,
+}
 const primaryCardHeader = {
-  background:
-    "linear-gradient(60deg, " + primaryColor[1] + ", " + primaryColor[2] + ")",
-  ...primaryBoxShadow
-};
+  background: "linear-gradient(60deg, " + primaryColor[1] + ", " + primaryColor[2] + ")",
+  ...primaryBoxShadow,
+}
 const roseCardHeader = {
-  background:
-    "linear-gradient(60deg, " + roseColor[1] + ", " + roseColor[2] + ")",
-  ...roseBoxShadow
-};
+  background: "linear-gradient(60deg, " + roseColor[1] + ", " + roseColor[2] + ")",
+  ...roseBoxShadow,
+}
 
 const cardActions = {
   margin: "0 20px 10px",
   paddingTop: "10px",
   borderTop: "1px solid " + grayColor[10],
   height: "auto",
-  ...defaultFont
-};
+  ...defaultFont,
+}
 
 const cardHeader = {
   margin: "-20px 15px 0",
   borderRadius: "3px",
-  padding: "15px"
-};
+  padding: "15px",
+}
 
 const card = {
   display: "inline-block",
@@ -201,8 +159,8 @@ const card = {
   boxShadow: "0 1px 4px 0 rgba(" + hexToRgb(blackColor) + ", 0.14)",
   borderRadius: "3px",
   color: "rgba(" + hexToRgb(blackColor) + ", 0.87)",
-  background: whiteColor
-};
+  background: whiteColor,
+}
 
 const defaultBoxShadow = {
   border: "0",
@@ -216,8 +174,8 @@ const defaultBoxShadow = {
     hexToRgb(blackColor) +
     ", 0.2)",
   padding: "10px 0",
-  transition: "all 150ms ease 0s"
-};
+  transition: "all 150ms ease 0s",
+}
 
 const title = {
   color: grayColor[2],
@@ -230,9 +188,9 @@ const title = {
   "& small": {
     color: grayColor[1],
     fontWeight: "400",
-    lineHeight: "1"
-  }
-};
+    lineHeight: "1",
+  },
+}
 
 const cardTitle = {
   ...title,
@@ -243,19 +201,19 @@ const cardTitle = {
     ...title,
     marginTop: ".625rem",
     marginBottom: "0.75rem",
-    minHeight: "auto"
-  }
-};
+    minHeight: "auto",
+  },
+}
 
 const cardSubtitle = {
-  marginTop: "-.375rem"
-};
+  marginTop: "-.375rem",
+}
 
 const cardLink = {
   "& + $cardLink": {
-    marginLeft: "1.25rem"
-  }
-};
+    marginLeft: "1.25rem",
+  },
+}
 
 export {
   hexToRgb,
@@ -267,6 +225,7 @@ export {
   card,
   defaultFont,
   primaryColor,
+  secondaryColor,
   warningColor,
   dangerColor,
   successColor,
@@ -294,5 +253,5 @@ export {
   cardTitle,
   cardSubtitle,
   cardLink,
-  darkComponents
-};
+  darkComponents,
+}
