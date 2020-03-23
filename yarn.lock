@@ -10015,6 +10015,11 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
+rjsf-material-ui@^0.3.9:
+  version "0.3.9"
+  resolved "https://registry.yarnpkg.com/rjsf-material-ui/-/rjsf-material-ui-0.3.9.tgz#2cb16e3d0fdf22106795f671c03ac19eabb6196a"
+  integrity sha512-DARQdyHCO/7WG1Pxs2f0V5Yx2tTtktOaxExZPdcL8II3oQsrZEMTmSUCFbzT860to2UNCWkbrIsrHnMJH/O98g==
+
 rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"
