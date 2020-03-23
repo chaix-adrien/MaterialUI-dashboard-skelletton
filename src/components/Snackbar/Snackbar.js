@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton"
 import Close from "@material-ui/icons/Close"
 // core components
 import styles from "assets/jss/material-dashboard-react/components/snackbarContentStyle.js"
+import { Icon } from "@material-ui/core"
 
 const useStyles = makeStyles(styles)
 

@@ -28,6 +28,8 @@ import Provider from "react-redux/es/components/Provider"
 import { Router as DomRouter } from "react-router-dom"
 import store from "./redux"
 import Router from "./Router.js"
+import { primaryColor, secondaryColor } from "assets/jss/material-dashboard-react.js"
+
 const hist = createBrowserHistory()
 
 const theme = createMuiTheme({

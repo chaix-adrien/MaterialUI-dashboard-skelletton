@@ -1,11 +1,30 @@
 .formauto * {
   font-size: 16px;
+  font-family: "Roboto";
 }
 
 .rjsf {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.rjsf > div {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.formauto .Mui-disabled {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.formauto .Mui-disabled > .MuiSelect-icon {
+  visibility: hidden;
+}
+
+.formauto .MuiGrid-root > .MuiFormControl-root {
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 .formauto #root {
@@ -26,6 +45,20 @@
   margin-bottom: 10px;
 }
 
+.formauto .Mui-fullWidth {
+  width: 100%;
+  max-width: unset !important;
+}
+
+.formauto .MuiGrid-container > .MuiGrid-root .MuiGrid-item {
+  max-width: 300px;
+  flex-grow: 1;
+}
+
+.formauto .Mui-textArea {
+  width: 800px;
+  flex-grow: 1;
+}
 .formauto .form-control {
   border-radius: 5px !important;
   border-width: 1px !important;
@@ -51,6 +84,7 @@
 }
 
 .formauto label {
+  font-size: 20px !important;
   font-weight: bold;
   color: black;
 }
@@ -59,10 +93,11 @@
   font-weight: normal;
 }
 
-.formauto fieldset fieldset {
+.formauto .MuiGrid-root {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 .formauto legend {
