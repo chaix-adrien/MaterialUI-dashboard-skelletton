@@ -9,9 +9,9 @@
   align-items: center;
 }
 
-.rjsf > div {
-  max-width: 100% !important;
-  width: 100% !important;
+.formauto {
+  display: flex;
+  justify-content: center;
 }
 
 .formauto .Mui-disabled {
@@ -51,7 +51,7 @@
 }
 
 .formauto .MuiGrid-container > .MuiGrid-root .MuiGrid-item {
-  max-width: 300px;
+  max-width: 350px;
   flex-grow: 1;
 }
 
