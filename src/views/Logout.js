@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react"
 import withReducer from "redux/withReducer"
 import { withStyles } from "@material-ui/core/styles"
-import { } from "assets/jss/material-dashboard-react.js";
-import { connect } from 'react-redux';
-import reducer from 'redux/reducers';
-import * as Actions from 'redux/actions';
-import { withRouter } from "react-router";
+import {} from "assets/jss/material-dashboard-react.js"
+import { connect } from "react-redux"
+import reducer from "redux/reducers"
+import Actions from "redux/actions"
+import { withRouter } from "react-router"
 
 class Logout extends React.Component {
   componentDidMount() {
@@ -18,10 +18,8 @@ class Logout extends React.Component {
 }
 
 const styles = theme => ({
-  container: {
-  }
+  container: {},
 })
 
-
-const mapStateToProps = (state) => ({ fiches: state.reducer.fiches })
+const mapStateToProps = state => ({ fiches: state.reducer.fiches })
 export default withRouter(withStyles(styles)(withReducer("reducer", reducer)(connect(mapStateToProps)(Logout))))

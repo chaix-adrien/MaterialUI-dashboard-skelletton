@@ -1,11 +1,11 @@
-import Admin from "layouts/Admin.js";
-import React from "react";
-import { connect } from 'react-redux';
-import { withRouter } from "react-router";
-import { Route, Switch } from "react-router-dom";
-import * as Actions from 'redux/actions';
-import reducer from 'redux/reducers';
-import withReducer from "redux/withReducer";
+import Admin from "layouts/Admin.js"
+import React from "react"
+import { connect } from "react-redux"
+import { withRouter } from "react-router"
+import { Route, Switch } from "react-router-dom"
+import Actions from "redux/actions"
+import reducer from "redux/reducers"
+import withReducer from "redux/withReducer"
 
 class Router extends React.Component {
   constructor(props) {
@@ -28,11 +28,13 @@ class Router extends React.Component {
   }
 
   render() {
-    return <Switch>
-      <Route component={Admin} />
-    </Switch>
+    return (
+      <Switch>
+        <Route component={Admin} />
+      </Switch>
+    )
   }
 }
 
-const mapStateToProps = (state) => ({ user: state.reducer.user })
-export default withRouter((withReducer("reducer", reducer)(connect(mapStateToProps)(Router))))
+const mapStateToProps = state => ({ user: state.reducer.user })
+export default withRouter(withReducer("reducer", reducer)(connect(mapStateToProps)(Router)))
