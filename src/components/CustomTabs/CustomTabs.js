@@ -14,7 +14,7 @@ import CardBody from "components/Card/CardBody.js"
 import CardHeader from "components/Card/CardHeader.js"
 
 import styles from "assets/jss/material-dashboard-react/components/customTabsStyle.js"
-import { Icon } from "@material-ui/core"
+import { Icon, IconButton } from "@material-ui/core"
 
 const useStyles = makeStyles(styles)
 
@@ -24,7 +24,7 @@ export default function CustomTabs(props) {
     setValue(value)
   }
   const classes = useStyles()
-  const { headerColor, plainTabs, tabs, title, rtlActive } = props
+  const { headerColor, plainTabs, tabs, title, rtlActive, rigthBtn } = props
   const cardTitle = classNames({
     [classes.cardTitle]: true,
     [classes.cardTitleRTL]: rtlActive,
@@ -64,6 +64,14 @@ export default function CustomTabs(props) {
             )
           })}
         </Tabs>
+        {rigthBtn && rigthBtn.display && (
+          <div style={{ display: "flex", alignItems: "center", float: "right" }}>
+            {rigthBtn.text && <h6 style={{ margin: 0 }}>{rigthBtn.text}</h6>}
+            <IconButton>
+              <Icon style={{ color: "white" }}>{rigthBtn.icon}</Icon>
+            </IconButton>
+          </div>
+        )}
       </CardHeader>
       <CardBody>
         {tabs.map((prop, key) => {
