@@ -1,9 +1,10 @@
+import { CircularProgress } from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
 import { makeStyles } from "@material-ui/styles"
+import Button from "components/CustomButtons/Button.js"
 import { default as React } from "react"
 import { withTheme } from "react-jsonschema-form"
 import { Theme as MuiTheme } from "rjsf-material-ui"
-import { Typography } from "@material-ui/core"
 
 const useStyles = makeStyles({
   root: {
@@ -41,7 +42,37 @@ const ObjectFieldTemplate = ({ DescriptionField, description, TitleField, title,
   )
 }
 
-const Form = withTheme({ ...MuiTheme, ObjectFieldTemplate })
+const FormMUI = withTheme({ ...MuiTheme, ObjectFieldTemplate })
+const Form = function FormWithLoading(props) {
+  const { readOnly, initLoad, loading, ...formProps } = props
+  return (
+    <div className={"formauto " + (readOnly ? " formReadOnly" : "")}>
+      {!initLoad ? (
+        <FormMUI {...formProps}>
+          {!loading ? (
+            <Button
+              color='primary'
+              type='submit'
+              variant='contained'
+              style={{
+                visibility: readOnly ? "hidden" : "visible",
+                margin: "auto",
+                display: "flex",
+                marginBottom: 15,
+              }}
+              className={readOnly ? "hidden" : ""}>
+              Valider
+            </Button>
+          ) : (
+            <CircularProgress style={{ width: 40 }} />
+          )}
+        </FormMUI>
+      ) : (
+        <CircularProgress />
+      )}
+    </div>
+  )
+}
 
 const OneOfGenerator = (title, noDesc, selector, selectorTitle, condition, isReadOnly, content, required, isBugged) => {
   console.log("title", title, condition)
