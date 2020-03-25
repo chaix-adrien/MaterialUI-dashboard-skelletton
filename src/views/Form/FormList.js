@@ -59,6 +59,7 @@ class FormList extends React.Component {
             },
           ]}
           data={users}
+          onRowClick={_ => null}
           options={{
             filtering: true,
             actionsColumnIndex: -1,
