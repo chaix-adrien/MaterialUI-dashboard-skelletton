@@ -67,7 +67,7 @@ export default function CustomTabs(props) {
         {rigthBtn && rigthBtn.display && (
           <div style={{ display: "flex", alignItems: "center", float: "right" }}>
             {rigthBtn.text && <h6 style={{ margin: 0 }}>{rigthBtn.text}</h6>}
-            <IconButton>
+            <IconButton onClick={rigthBtn.onClick}>
               <Icon style={{ color: "white" }}>{rigthBtn.icon}</Icon>
             </IconButton>
           </div>
