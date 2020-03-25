@@ -29,6 +29,7 @@ import { Router as DomRouter } from "react-router-dom"
 import store from "./redux"
 import Router from "./Router.js"
 import { primaryColor, secondaryColor } from "assets/jss/material-dashboard-react.js"
+import "assets/css/flex.css"
 
 const hist = createBrowserHistory()
 
