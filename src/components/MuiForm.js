@@ -1,10 +1,48 @@
-import { CircularProgress } from "@material-ui/core"
+import { CircularProgress, IconButton, TextField, Typography } from "@material-ui/core"
+import FormControl from "@material-ui/core/FormControl"
 import Grid from "@material-ui/core/Grid"
+import CreateIcon from "@material-ui/icons/Create"
 import { makeStyles } from "@material-ui/styles"
 import Button from "components/CustomButtons/Button.js"
-import { default as React } from "react"
+import DialogSelector from "components/DialogSelector"
+import { default as React, useState } from "react"
 import { withTheme } from "react-jsonschema-form"
 import { Theme as MuiTheme } from "rjsf-material-ui"
+
+const SelectorWidget = ({ id, required, readonly, disabled, label, value, onChange, onBlur, onFocus, autofocus, options, schema }) => {
+  const [open, setOpen] = useState(false)
+  const displayValue = value ? (schema.displayValue ? schema.displayValue(value) : value) : schema.noTxt
+  return (
+    <FormControl
+      //error={!!rawErrors}
+      className='selector'
+      required={required}>
+      <TextField
+        id={id}
+        required={required}
+        disabled={disabled || readonly}
+        style={{ width: 0, height: 0 }}
+        value={value ? (schema.displayValue ? schema.displayValue(value) : value) : ""}
+      />
+      <Typography style={{ marginRight: 10 }}>{displayValue}</Typography>
+      {!readonly && (
+        <IconButton style={{ padding: 0 }} onClick={_ => setOpen(true)}>
+          <CreateIcon />
+        </IconButton>
+      )}
+      <DialogSelector
+        data={schema.choices}
+        open={open}
+        onClose={_ => setOpen(false)}
+        columns={schema.columns}
+        disabled={disabled || readonly}
+        selectTxt={schema.selectTxt}
+        onSelect={selected => onChange(selected)}
+        title={schema.selectorTitle}
+      />
+    </FormControl>
+  )
+}
 
 const useStyles = makeStyles({
   root: {
@@ -22,7 +60,7 @@ const ObjectFieldTemplate = ({ DescriptionField, description, TitleField, title,
       {description && <DescriptionField id={`${idSchema.$id}-description`} description={description} />}
       <Grid container={true} spacing={2} className={classes.root}>
         {properties.map((element, index) => {
-          //console.log(element)
+          // console.log(element)
           return (
             <Grid
               item={true}
@@ -30,8 +68,12 @@ const ObjectFieldTemplate = ({ DescriptionField, description, TitleField, title,
               key={index}
               style={{ marginBottom: "10px" }}
               className={element.content.props.schema.fullWidth ? "Mui-fullWidth" : ""}>
-              {(element.content.props.schema.format === "date" || element.content.props.schema.type === "null") && (
-                <label className={"customLabel" + element.content.props.schema.format}>{element.content.props.schema.title}</label>
+              {(element.content.props.schema.format === "date" ||
+                element.content.props.schema.type === "null" ||
+                element.content.props.schema.format === "selector") && (
+                <label className={"customLabel" + (element.content.props.schema.type === "null" ? "" : "Left")}>
+                  {element.content.props.schema.title + (element.content.props.required ? "*" : "")}
+                </label>
               )}
               {element.content}
             </Grid>
@@ -44,11 +86,11 @@ const ObjectFieldTemplate = ({ DescriptionField, description, TitleField, title,
 
 const FormMUI = withTheme({ ...MuiTheme, ObjectFieldTemplate })
 const Form = function FormWithLoading(props) {
-  const { readOnly, initLoad, loading, ...formProps } = props
+  const { readOnly, initLoad, loading, children, ...formProps } = props
   return (
     <div className={"formauto " + (readOnly ? " formReadOnly" : "")}>
       {!initLoad ? (
-        <FormMUI {...formProps}>
+        <FormMUI {...formProps} widgets={{ selector: SelectorWidget }}>
           {!loading ? (
             <Button
               color='primary'
@@ -75,7 +117,6 @@ const Form = function FormWithLoading(props) {
 }
 
 const OneOfGenerator = (title, noDesc, selector, selectorTitle, condition, isReadOnly, content, required, isBugged) => {
-  console.log("title", title, condition)
   return {
     type: "object",
     title,
