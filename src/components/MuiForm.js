@@ -1,13 +1,15 @@
-import { CircularProgress, IconButton, TextField, Typography } from "@material-ui/core"
-import FormControl from "@material-ui/core/FormControl"
+import { CircularProgress, Typography, IconButton, Input, TextField } from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
-import CreateIcon from "@material-ui/icons/Create"
 import { makeStyles } from "@material-ui/styles"
 import Button from "components/CustomButtons/Button.js"
-import DialogSelector from "components/DialogSelector"
 import { default as React, useState } from "react"
 import { withTheme } from "react-jsonschema-form"
 import { Theme as MuiTheme } from "rjsf-material-ui"
+import { Widgets } from "rjsf-material-ui"
+import DialogSelector from "components/DialogSelector"
+import CreateIcon from "@material-ui/icons/Create"
+import FormControl from "@material-ui/core/FormControl"
+import { WidgetProps } from "react-jsonschema-form"
 
 const SelectorWidget = ({ id, required, readonly, disabled, label, value, onChange, onBlur, onFocus, autofocus, options, schema }) => {
   const [open, setOpen] = useState(false)
@@ -90,7 +92,7 @@ const Form = function FormWithLoading(props) {
   return (
     <div className={"formauto " + (readOnly ? " formReadOnly" : "")}>
       {!initLoad ? (
-        <FormMUI {...formProps} widgets={{ selector: SelectorWidget }}>
+        <FormMUI noValidate={true} {...formProps} widgets={{ selector: SelectorWidget }}>
           {!loading ? (
             <Button
               color='primary'
