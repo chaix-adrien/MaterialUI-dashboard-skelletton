@@ -14,10 +14,15 @@
   justify-content: center;
 }
 
-.formauto .customLabeldate {
+.formauto .customLabelLeft {
   font-size: 16px !important;
   width: 100%;
   text-align: left;
+}
+
+.formauto .selector {
+  display: flex;
+  flex-direction: row;
 }
 
 .formauto .Mui-disabled {
@@ -102,6 +107,7 @@
 .formauto .MuiGrid-root {
   display: flex;
   flex-wrap: wrap;
+  max-width: 100%;
   align-items: flex-end;
   justify-content: center;
 }
