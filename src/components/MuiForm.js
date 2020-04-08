@@ -8,12 +8,14 @@ import { Theme as MuiTheme } from "rjsf-material-ui"
 import { Widgets } from "rjsf-material-ui"
 import DialogSelector from "components/DialogSelector"
 import CreateIcon from "@material-ui/icons/Create"
+import RemoveIcon from "@material-ui/icons/Delete"
 import FormControl from "@material-ui/core/FormControl"
 import { WidgetProps } from "react-jsonschema-form"
 
 const SelectorWidget = ({ id, required, readonly, disabled, label, value, onChange, onBlur, onFocus, autofocus, options, schema }) => {
   const [open, setOpen] = useState(false)
   const displayValue = value ? (schema.displayValue ? schema.displayValue(value) : value) : schema.noTxt
+  console.log("READONLY?", readonly)
   return (
     <FormControl
       //error={!!rawErrors}
@@ -28,19 +30,26 @@ const SelectorWidget = ({ id, required, readonly, disabled, label, value, onChan
       />
       <Typography style={{ marginRight: 10 }}>{displayValue}</Typography>
       {!readonly && (
-        <IconButton style={{ padding: 0 }} onClick={_ => setOpen(true)}>
+        <IconButton className='no-padding' onClick={(_) => setOpen(true)}>
           <CreateIcon />
+        </IconButton>
+      )}
+      {!readonly && value && (
+        <IconButton className='no-padding' onClick={(_) => onChange(undefined)}>
+          <RemoveIcon />
         </IconButton>
       )}
       <DialogSelector
         data={schema.choices}
         open={open}
-        onClose={_ => setOpen(false)}
+        onClose={(_) => setOpen(false)}
         columns={schema.columns}
         disabled={disabled || readonly}
         selectTxt={schema.selectTxt}
-        onSelect={selected => onChange(selected)}
+        onSelect={(selected) => onChange(selected)}
         title={schema.selectorTitle}
+        onCreate={schema.onCreate}
+        createTxt={schema.createTxt}
       />
     </FormControl>
   )
@@ -161,19 +170,6 @@ const OneOfGenerator = (title, noDesc, selector, selectorTitle, condition, isRea
         }),
   }
 }
-/**
- *   oneOf: [
-            {
-              title: noTitle,
-              ...(isBugged ? { properties: {} } : {}),
-            },
-            {
-              title: yesTitle,
-              properties: content,
-              required,
-            },
-          ].sort(() => (condition ? 1 : -1)),
- */
 
 export { OneOfGenerator }
 
