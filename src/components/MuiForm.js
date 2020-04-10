@@ -11,6 +11,7 @@ import CreateIcon from "@material-ui/icons/Create"
 import RemoveIcon from "@material-ui/icons/Delete"
 import FormControl from "@material-ui/core/FormControl"
 import { WidgetProps } from "react-jsonschema-form"
+import { withRouter } from "react-router"
 
 const SelectorWidget = ({ id, required, readonly, disabled, label, value, onChange, onBlur, onFocus, autofocus, options, schema }) => {
   const [open, setOpen] = useState(false)
@@ -30,23 +31,23 @@ const SelectorWidget = ({ id, required, readonly, disabled, label, value, onChan
       />
       <Typography style={{ marginRight: 10 }}>{displayValue}</Typography>
       {!readonly && (
-        <IconButton className='no-padding' onClick={(_) => setOpen(true)}>
+        <IconButton className='no-padding' onClick={_ => setOpen(true)}>
           <CreateIcon />
         </IconButton>
       )}
       {!readonly && value && (
-        <IconButton className='no-padding' onClick={(_) => onChange(undefined)}>
+        <IconButton className='no-padding' onClick={_ => onChange(undefined)}>
           <RemoveIcon />
         </IconButton>
       )}
       <DialogSelector
         data={schema.choices}
         open={open}
-        onClose={(_) => setOpen(false)}
+        onClose={_ => setOpen(false)}
         columns={schema.columns}
         disabled={disabled || readonly}
         selectTxt={schema.selectTxt}
-        onSelect={(selected) => onChange(selected)}
+        onSelect={selected => onChange(selected)}
         title={schema.selectorTitle}
         onCreate={schema.onCreate}
         createTxt={schema.createTxt}
@@ -57,8 +58,8 @@ const SelectorWidget = ({ id, required, readonly, disabled, label, value, onChan
 
 const useStyles = makeStyles({
   root: {
-    marginTop: 10,
-  },
+    marginTop: 10
+  }
 })
 
 const ObjectFieldTemplate = ({ DescriptionField, description, TitleField, title, properties, required, uiSchema, idSchema }) => {
@@ -97,11 +98,23 @@ const ObjectFieldTemplate = ({ DescriptionField, description, TitleField, title,
 
 const FormMUI = withTheme({ ...MuiTheme, ObjectFieldTemplate })
 const Form = function FormWithLoading(props) {
-  const { readOnly, initLoad, loading, children, ...formProps } = props
+  const { readOnly, initLoad, loading, children, removeEditOnSubmit, onSubmit, history, ...formProps } = props
+  console.log("router", history)
   return (
     <div className={"formauto " + (readOnly ? " formReadOnly" : "")}>
       {!initLoad ? (
-        <FormMUI noValidate={true} {...formProps} widgets={{ selector: SelectorWidget }}>
+        <FormMUI
+          noValidate={true}
+          {...formProps}
+          widgets={{ selector: SelectorWidget }}
+          onSubmit={data => {
+            if (removeEditOnSubmit) {
+              onSubmit(data)
+              if (window.location.pathname.includes("/edit")) history.push(window.location.pathname.replace("/edit", ""))
+            } else {
+              onSubmit(data)
+            }
+          }}>
           {!loading ? (
             <Button
               color='primary'
@@ -111,7 +124,7 @@ const Form = function FormWithLoading(props) {
                 visibility: readOnly ? "hidden" : "visible",
                 margin: "auto",
                 display: "flex",
-                marginBottom: 15,
+                marginBottom: 15
               }}
               className={readOnly ? "hidden" : ""}>
               Valider
@@ -134,7 +147,7 @@ const OneOfGenerator = (title, noDesc, selector, selectorTitle, condition, isRea
     description: isReadOnly && !condition ? noDesc : "",
     ...(isReadOnly
       ? {
-          properties: condition ? content : {},
+          properties: condition ? content : {}
         }
       : {
           properties: {
@@ -142,8 +155,8 @@ const OneOfGenerator = (title, noDesc, selector, selectorTitle, condition, isRea
               type: "boolean",
               title: selectorTitle,
               enum: [true, false],
-              default: condition,
-            },
+              default: condition
+            }
           },
           dependencies: {
             [selector]: {
@@ -151,26 +164,39 @@ const OneOfGenerator = (title, noDesc, selector, selectorTitle, condition, isRea
                 {
                   properties: {
                     [selector]: {
-                      enum: [false],
-                    },
-                  },
+                      enum: [false]
+                    }
+                  }
                 },
                 {
                   properties: {
                     [selector]: {
-                      enum: [true],
+                      enum: [true]
                     },
-                    ...content,
+                    ...content
                   },
-                  required: required,
-                },
-              ],
-            },
-          },
-        }),
+                  required: required
+                }
+              ]
+            }
+          }
+        })
   }
 }
+/**
+ *   oneOf: [
+            {
+              title: noTitle,
+              ...(isBugged ? { properties: {} } : {}),
+            },
+            {
+              title: yesTitle,
+              properties: content,
+              required,
+            },
+          ].sort(() => (condition ? 1 : -1)),
+ */
 
 export { OneOfGenerator }
 
-export default Form
+export default withRouter(Form)
