@@ -4,7 +4,7 @@ import { Dialog } from "@material-ui/core"
 import { useState } from "react"
 import React from "react"
 import PubSub from "pubsub-js"
-
+import DialogSelector from "./DialogSelector"
 export default ({
   data,
   columns,
@@ -18,10 +18,13 @@ export default ({
   addTxt,
   addData,
   addColumn,
+  createTxt,
+  onCreate,
+  actions = [],
   ...otherProps
 }) => {
   const [open, setOpen] = useState(false)
-  if (!data) return <h3 style={{ textAlign: "center" }}>{noDataTxt}</h3>
+  if (!data) return <h3 className='text-c'>{noDataTxt}</h3>
   return (
     <div className='col align-c'>
       {data.length > 0 && (
@@ -32,11 +35,12 @@ export default ({
           style={{ width: "100%" }}
           columns={columns}
           actions={[
+            ...actions,
             onDetails
               ? {
                   icon: "remove_red_eye",
                   tooltip: detailTxt,
-                  onClick: (_, rowData) => onDetails(rowData),
+                  onClick: (_, rowData) => onDetails(rowData)
                 }
               : undefined,
             onRemove
@@ -46,10 +50,10 @@ export default ({
                   onClick: (_, rowData) =>
                     PubSub.confirm({
                       title: removeTxt + " ?",
-                      onAgree: _ => onRemove(rowData.id),
-                    }),
+                      onAgree: _ => onRemove(rowData.id)
+                    })
                 }
-              : undefined,
+              : undefined
           ]}
           onRowClick={_ => null}
           options={{
@@ -59,43 +63,36 @@ export default ({
             header: hideHeader ? false : true,
             paging: false,
             filtering: false,
-            actionsColumnIndex: -1,
+            actionsColumnIndex: -1
           }}
           {...otherProps}
         />
       )}
       {data.length === 0 && <h3 style={{ textAlign: "center" }}>{noDataTxt}</h3>}
-      {onAdd && (
-        <Button style={{ maxWidth: 200, marginTop: 20 }} color='primary' variant='contained' onClick={_ => setOpen(true)}>
-          {addTxt}
-        </Button>
-      )}
-      <Dialog onClose={_ => setOpen(false)} open={open}>
-        <MaterialTable
-          title={addTxt}
-          isLoading={!addData}
-          data={(addData || []).filter(c => !data.some(p => p.id === c.id))}
-          style={{ width: "100%" }}
-          columns={addColumn}
-          actions={[
-            {
-              icon: "add",
-              tooltip: addTxt,
-              onClick: (_, rowData) => {
-                onAdd(rowData.id)
-                setOpen(false)
-              },
-            },
-          ]}
-          onRowClick={_ => null}
-          options={{
-            filtering: true,
-            pageSize: 20,
-            toolbar: true,
-            actionsColumnIndex: -1,
-          }}
-        />
-      </Dialog>
+      <div className='justify-c align-c margin-top'>
+        {onAdd && (
+          <Button style={{ maxWidth: 200 }} color='primary' variant='contained' onClick={_ => setOpen(true)}>
+            {addTxt}
+          </Button>
+        )}
+        {onCreate && (
+          <Button style={{ fontSize: 20, padding: 0, height: 30, width: 30 }} color='primary' variant='contained' onClick={onCreate}>
+            +
+          </Button>
+        )}
+      </div>
+      <DialogSelector
+        data={(addData || []).filter(c => !data.some(p => p.id === c.id))}
+        onClose={_ => setOpen(false)}
+        open={open}
+        columns={addColumn}
+        selectTxt={addTxt}
+        onSelect={rowData => onAdd(rowData.id)}
+        title={addTxt}
+        onCreate={onCreate}
+        createTxt={createTxt}
+        add
+      />
     </div>
   )
 }
